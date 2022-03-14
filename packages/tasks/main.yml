@@ -1,0 +1,4 @@
+---
+- include_tasks: apt.yml
+- include_tasks: unarchive.yml
+- include_tasks: fzf.yml

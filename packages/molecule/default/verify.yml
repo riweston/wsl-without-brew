@@ -1,0 +1,21 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: all
+  gather_facts: false
+  vars_files:
+    - ../../vars/main.yml
+  tasks:
+    - name: Test packages
+      with_items: "{{ unarchive }}"
+      stat:
+        path: "/usr/local/bin/{{ item.name }}"
+      register: packages
+
+    - name: Verify package in /usr/local/bin
+      with_items: "{{packages.results}}"
+      assert:
+        that: "{{item.stat.exists}}"
+        success_msg: "/usr/local/bin/{{item.item.name}} exists"
+        fail_msg: "{{item.item.name}} missing"

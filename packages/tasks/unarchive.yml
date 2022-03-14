@@ -1,0 +1,43 @@
+---
+- name: Set facts
+  set_fact:
+    tmp_ansible_bin: /tmp/ansible-bin
+
+- name: Create a working directory for remote packages
+  file:
+    path: "{{ tmp_ansible_bin }}"
+    state: directory
+
+- name: Grab remote packages
+  loop: "{{ unarchive }}"
+  unarchive:
+    src: "{{ item.url }}"
+    dest: "{{ tmp_ansible_bin }}"
+    remote_src: yes
+
+- name: Find any rogue packages
+  loop: "{{ unarchive }}"
+  find:
+    paths: "{{ tmp_ansible_bin }}"
+    recurse: yes
+    patterns: "{{ item.name }}"
+  register: found
+
+- name: "Copy to {{ tmp_ansible_bin }}"
+  loop: "{{ found.results | map(attribute='files') | flatten }}"
+  copy:
+    src: "{{ item.path }}"
+    dest: "{{ tmp_ansible_bin }}"
+    remote_src: yes
+
+- name: Move packages to /usr/local/bin
+  loop: "{{ unarchive }}"
+  copy:
+    src: "{{ tmp_ansible_bin }}/{{ item.name }}"
+    dest: /usr/local/bin
+    remote_src: yes
+
+- name: "Remove {{ tmp_ansible_bin }}"
+  file:
+    state: absent
+    path: "{{ tmp_ansible_bin }}"

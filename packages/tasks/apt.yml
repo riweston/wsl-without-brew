@@ -1,0 +1,14 @@
+---
+- name: Install apt packages
+  apt:
+    pkg:
+    - fish
+    - direnv
+    - unzip
+    - git
+    - wget
+    - curl
+    - build-essential
+    state: latest
+    update_cache: yes
+

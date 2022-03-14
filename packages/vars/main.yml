@@ -1,0 +1,21 @@
+---
+# vars file for packages
+unarchive:
+  - name: k9s
+    url: https://github.com/derailed/k9s/releases/download/v0.25.18/k9s_Linux_x86_64.tar.gz
+  - name: chezmoi
+    url: https://github.com/twpayne/chezmoi/releases/download/v2.14.0/chezmoi_2.14.0_linux_amd64.tar.gz
+  - name: starship
+    url: https://github.com/starship/starship/releases/download/v1.4.2/starship-x86_64-unknown-linux-gnu.tar.gz
+  - name: lazygit
+    url: https://github.com/jesseduffield/lazygit/releases/download/v0.33/lazygit_0.33_Linux_x86_64.tar.gz
+  - name: dog
+    url: https://github.com/ogham/dog/releases/download/v0.1.0/dog-v0.1.0-x86_64-unknown-linux-gnu.zip
+  - name: stern
+    url: https://github.com/stern/stern/releases/download/v1.21.0/stern_1.21.0_linux_amd64.tar.gz
+
+get_url:
+  - name: kubectx
+    url: https://github.com/ahmetb/kubectx/releases/download/v0.9.4/kubectx
+  - name: kubens
+    url: https://github.com/ahmetb/kubectx/releases/download/v0.9.4/kubens

@@ -1,0 +1,24 @@
+---
+- name: Set facts
+  set_fact:
+    tmp_ansible_fzf: /tmp/ansible-fzf
+
+- name: Create a working directory for fzf
+  file:
+    path: "{{ tmp_ansible_fzf }}"
+    state: directory
+
+- name: Checkout fzf repo
+  git:
+    repo: 'https://github.com/junegunn/fzf.git'
+    dest: "{{ tmp_ansible_fzf }}"
+    depth: 1
+
+- name: Run fzf install script
+  shell:
+    cmd: "{{ tmp_ansible_fzf }}/install --key-bindings --completion"
+
+- name: "Remove {{ tmp_ansible_fzf }}"
+  file:
+    state: absent
+    path: "{{ tmp_ansible_fzf }}"
